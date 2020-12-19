@@ -1,17 +1,19 @@
+import groupPhase from "./classes/groupPhase.js"
+import { worldCupTeams } from "./teams.js"
 
 
-class Tournament {  
-    constructor(name, teams=[], rounds=1){
-        this.name = name
-        this.teams = teams
-        this.round = rounds
-        this.groupMatchSchedule = []
 
-    }
-}
-const worldCupTeams = ["España", "Alemania"]
-const worldCup = new Tournament("World Cup", worldCupTeams)
 
-for (const team of worldCup.teams){
-    console.log(team)
-}
+
+const config = { rounds:1, pointsPerWin:3, pointsPerDraw:1, pointsPerLose:0 }
+const worldCup = new groupPhase("World Cup", worldCupTeams)
+const teamNames = worldCup.teams.map(team => team.name)
+
+console.log("=========================================")
+console.log("========= COMIENZA EL MUNDIAL ===========")
+console.log("=========================================")
+console.log("EQUIPOS PARTICIPANTES:")
+console.log(worldCupTeams)
+
+worldCup.lotteryGroups()
+console.log()
