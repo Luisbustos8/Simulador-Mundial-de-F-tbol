@@ -7,7 +7,7 @@ export default class groupPhase extends Tournament {
     }
     setup(config) {
         const defaultConfig = {
-            groups: 8,
+            rounds: 1,
             pointsPerWin: 3,
             pointsPerDraw: 1,
             pointsPerLose: 0
