@@ -13,6 +13,7 @@ Array.prototype.shuffle = function()
 
 const LOCAL_TEAM = 0
 const AWAY_TEAM = 1
+const GROUP_SIZE = 4
 
 
 
@@ -76,47 +77,51 @@ export default class Tournament {
         
     }
     generateFullSchedule(){
-        console.log("ww",this.groups)
-        let prueba = []
+        
+        
+        
         for (let group of this.groups){
             const groupCalendarModified = this.generateCalendarForGroup(group)
-            console.log("kkk",groupCalendarModified)
-            prueba.push(groupCalendarModified)
-            console.log(prueba[0])
-            
+            this.fullSchedule.push(groupCalendarModified)      
         }
-        
-       console.log("jaime", prueba[0])
-       console.log("je", prueba[1])
-       console.log("jae", prueba[2])
-       console.log("je0", prueba[3])
+        console.log("Y", this.fullSchedule)
+        console.log("luis", this.fullSchedule[3])
+        console.log("luis", this.fullSchedule[6])
 
         
     }
     generateCalendarForGroup(group){
-        const groupSchedule = this.matchDaySchedule.slice()
-       
+    
+        const groupSchedule = this.getGroupStructure()
+        
         const groupScheduleWithLocals = this.setLocalTeam(group, groupSchedule)
         
         const groupScheduleWithAways = this.setAwayTeams(group, groupScheduleWithLocals)
    
         const groupScheduleWithAllMatches = this.fixLastTeamSchedule(group, groupScheduleWithAways)
-        console.log("--->", groupScheduleWithAllMatches)
+       
+        
         return groupScheduleWithAllMatches
+        
+
+        
     }
-    initSchedule(){
-        const numberOfMatchDays = this.groupA.length - 1
-        const numberOfMatchesPerMatchDay = this.groupA.length / 2
+    
+                
+    
+    getGroupStructure(){
+        const numberOfMatchDays = GROUP_SIZE - 1
+        const numberOfMatchesPerMatchDay = GROUP_SIZE / 2
+        const groupStructure = []
         for (let i = 0; i < numberOfMatchDays; i++) {
             const matchDay = []  // jornada vacía
             for (let j = 0; j < numberOfMatchesPerMatchDay; j++) {
                 const match = ['Equipo local', 'Equipo visitante']
                 matchDay.push(match) 
             }
-            this.matchDaySchedule.push(matchDay)
-            
+            groupStructure.push(matchDay) 
         } 
-                
+        return groupStructure
     }
     setLocalTeam(group, groupSchedule){
         
