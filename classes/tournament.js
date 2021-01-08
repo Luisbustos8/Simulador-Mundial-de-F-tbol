@@ -22,13 +22,13 @@ export default class Tournament {
     constructor(name, teams=[], config={}){
         this.name = name
         this.groups = []
-        this.matchDaySchedule = []
         this.fullSchedule = []
         this.setup(config)
         this.setupTeams(teams)
-
+        
 
     }
+        
     setup(config){
         const defaultConfig = { rounds:1 }
         this.config = config
@@ -84,9 +84,7 @@ export default class Tournament {
             const groupCalendarModified = this.generateCalendarForGroup(group)
             this.fullSchedule.push(groupCalendarModified)      
         }
-        console.log("Y", this.fullSchedule)
-        console.log("luis", this.fullSchedule[3])
-        console.log("luis", this.fullSchedule[6])
+        
 
         
     }
@@ -175,7 +173,6 @@ export default class Tournament {
             matchDayNumber++
         })
         return groupSchedule
-        console.log("Sorteo grupo:", this.matchDaySchedule)
     }     
 }
     
