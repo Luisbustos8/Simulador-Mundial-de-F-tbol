@@ -9,7 +9,6 @@ console.log("=========================================")
 console.log("EQUIPOS PARTICIPANTES:")
 console.log(worldCupTeams)
 worldCup.lotteryGroups()
-console.log("SORTEO DE GRUPOS")
 worldCup.generateFullSchedule()
 
 // Mostramos el calendario de cada grupo.
@@ -48,4 +47,20 @@ const letterGroup2 = ["A", "B", "C", "D", "E", "F", "G", "H"]
         }) 
         z++  
     })
+
+// Comenzamos la fase de grupos.
+
+ 
+worldCup.start()
+i = 0
+const lettersForGroup = ["A", "B", "C", "D", "E", "F", "G", "H"]
+    worldCup.summaries.forEach(summary=> {
+    console.log(`RESUMEN GRUPO ${lettersForGroup[i]}`)
+    summary.results.forEach(results => {
+        console.log(`${results.homeTeam} ${results.homeGoals} - ${results.awayGoals} ${results.awayTeam}`)
+    })
+    i++   
+    
+})
+    
 

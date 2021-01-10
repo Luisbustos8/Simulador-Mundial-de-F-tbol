@@ -10,9 +10,8 @@ Array.prototype.shuffle = function()
 	}
 	return this;
 }
-
-const LOCAL_TEAM = 0
-const AWAY_TEAM = 1
+export const LOCAL_TEAM = 0
+export const AWAY_TEAM = 1
 const GROUP_SIZE = 4
 
 
@@ -25,8 +24,8 @@ export default class Tournament {
         this.fullSchedule = []
         this.setup(config)
         this.setupTeams(teams)
-        
-
+        this.summaries = []
+       
     }
         
     setup(config){
@@ -65,15 +64,7 @@ export default class Tournament {
         this.groupG = teamsNames.splice(0, (teamsNames.length/2)),
         this.groupH = teamsNames.splice(0, (teamsNames.length))
     ]
-        console.log("SORTEO GRUPOS WORLD CUP")
-        console.log("Grupo A:", this.groupA)
-        console.log("Grupo B:", this.groupB)
-        console.log("Grupo C:", this.groupC)
-        console.log("Grupo D:", this.groupD)
-        console.log("Grupo E:", this.groupE)
-        console.log("Grupo F:", this.groupF)
-        console.log("Grupo G:", this.groupG)
-        console.log("Grupo H:", this.groupH)
+        
         
     }
     generateFullSchedule(){
@@ -85,7 +76,7 @@ export default class Tournament {
             this.fullSchedule.push(groupCalendarModified)      
         }
         
-
+       
         
     }
     generateCalendarForGroup(group){
@@ -134,7 +125,7 @@ export default class Tournament {
                     teamIndex = 0
                 }
             })
-             
+            
         }) 
         return groupSchedule
     }
@@ -164,17 +155,50 @@ export default class Tournament {
         const lastTeamName = teamNames[teamNames.length - 1]
         groupSchedule.forEach(matchDay => {
             const firstMatch = matchDay[0]
-            if (matchDayNumber % 2 == 0) { // si jornada par -> juega en casa
+            if (matchDayNumber % 2 == 0) {
                 firstMatch[AWAY_TEAM] = firstMatch[LOCAL_TEAM]
                 firstMatch[LOCAL_TEAM] = lastTeamName
-            } else { // jornada impar -> juega fuera
+            } else { 
                 firstMatch[AWAY_TEAM] = lastTeamName
             }
             matchDayNumber++
         })
         return groupSchedule
-    }     
+    }  
+    start(){
+         
+        for (const groups of this.fullSchedule) {
+            const matchDaySummary = {
+                results: [],
+                standings: undefined
+            }
+            for (const group of groups){
+                for (const match of group){
+                    const result = this.play(match)
+                    this.updateTeams(result)  
+                    matchDaySummary.results.push(result)
+            }
+            this.getStandings()
+            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
+            this.summaries.push(matchDaySummary)
+        }
+        
+    }
+
+        
+    }
+    getStandings() {
+        throw new Error('getStandings not implemented')
+    }
+
+    updateTeams(result){
+        throw new Error("update method not implemented")
+    }
+    play(group){
+        throw new Error("play method not implemented")
+    }
 }
     
+
 
     
