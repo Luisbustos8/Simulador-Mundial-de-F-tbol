@@ -26,7 +26,7 @@ export default class groupPhase extends Tournament {
     }
 
     generateGoals() {
-        return Math.round(Math.random() * 10)
+        return Math.round(Math.random() * 5)
     }
     play(group){
         const homeGoals = this.generateGoals()
@@ -41,16 +41,20 @@ export default class groupPhase extends Tournament {
     getTeamsForNames(name) {
         return this.teams.find(team => team.name == name)
     }
-    updateTeams(result){
+    updateTeams(result, group){
         const homeTeam = this.getTeamsForNames(result.homeTeam)
         const awayTeam = this.getTeamsForNames(result.awayTeam)
+        
 
         if (homeTeam && awayTeam) { 
 
             homeTeam.goalsFor += result.homeGoals
             homeTeam.goalsAgainst += result.awayGoals
+            homeTeam.group = group
             awayTeam.goalsFor += result.awayGoals
             awayTeam.goalsAgainst += result.homeGoals
+            awayTeam.group = group
+            
 
             if (result.homeGoals > result.awayGoals) { 
                 homeTeam.points += this.config.pointsPerWin

@@ -1,3 +1,4 @@
+
 Array.prototype.shuffle = function()
 {
 	var i = this.length;
@@ -14,7 +15,7 @@ export const LOCAL_TEAM = 0
 export const AWAY_TEAM = 1
 const GROUP_SIZE = 4
 
-
+const GROUPS_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"]
 
 
 export default class Tournament {  
@@ -25,7 +26,7 @@ export default class Tournament {
         this.setup(config)
         this.setupTeams(teams)
         this.summaries = []
-       
+ 
     }
         
     setup(config){
@@ -45,13 +46,16 @@ export default class Tournament {
             name: teamName,
             matchesWon: 0,
             matchesDrawn: 0,
-            matchesLost: 0
+            matchesLost: 0,
+            group: ""
         }
     }
     getTeamNames() {
         return this.teams.map(team => team.name)
     }
-    
+    getGroups(){
+        return this.groups
+    }
     lotteryGroups(){
         const teamsNames = this.getTeamNames()
         this.groups = [
@@ -63,10 +67,9 @@ export default class Tournament {
         this.groupF = teamsNames.splice(0, (teamsNames.length/3)),
         this.groupG = teamsNames.splice(0, (teamsNames.length/2)),
         this.groupH = teamsNames.splice(0, (teamsNames.length))
-    ]
-        
-        
+    ]   
     }
+
     generateFullSchedule(){
         
         
@@ -75,6 +78,7 @@ export default class Tournament {
             const groupCalendarModified = this.generateCalendarForGroup(group)
             this.fullSchedule.push(groupCalendarModified)      
         }
+        
         
        
         
@@ -163,29 +167,30 @@ export default class Tournament {
             }
             matchDayNumber++
         })
-        return groupSchedule
+        return groupSchedule 
     }  
     start(){
-         
-        for (const groups of this.fullSchedule) {
+        
+        this.fullSchedule.forEach((groups, index) => {
             const matchDaySummary = {
                 results: [],
-                standings: undefined
+                standings: undefined,
+                group: GROUPS_LETTERS[index]
+            };
+             
+            for (const group of groups) {
+                for (const match of group) {
+                const result = this.play(match);
+                this.updateTeams(result, GROUPS_LETTERS[index]);
+                matchDaySummary.results.push(result);
+                }
             }
-            for (const group of groups){
-                for (const match of group){
-                    const result = this.play(match)
-                    this.updateTeams(result)  
-                    matchDaySummary.results.push(result)
-            }
-            this.getStandings()
-            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
-            this.summaries.push(matchDaySummary)
-        }
-        
-    }
-
-        
+            this.getStandings();
+            matchDaySummary.standings = this.teams.map((team) =>
+                Object.assign({}, team)
+            );
+            this.summaries.push(matchDaySummary);   
+        });
     }
     getStandings() {
         throw new Error('getStandings not implemented')
