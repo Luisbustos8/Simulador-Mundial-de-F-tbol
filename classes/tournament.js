@@ -202,8 +202,42 @@ export default class Tournament {
     play(group){
         throw new Error("play method not implemented")
     }
-}
+    sortGroup(group){ 
+        for (let i = 0; i < group.length; i++) {
+            for (let j = 0; j < group.length; j++) {
+                if (group[i].points > group[j + 1].points) {
+                    let aux = group[j];
+                    group[j] = group[j + 1];
+                    group[j + 1] = aux;
+                }
+            }
+        }
+        return group
+
+    }
+    startFinalPhase(){
+        const sideA = ["A", "C", "E", "G"]
+        const sideB = ["B", "D", "F", "H"]
+        const clasificatedTeamsSideA = []
+        const clasificatedTeamsSideB = []
+        const standings = this.summaries[7].standings
+        for (const letter of sideA){
+            const teamsByGroup = standings.filter(team => team.group === letter);
+            clasificatedTeamsSideA.push(teamsByGroup[0].name)
+            clasificatedTeamsSideB.push(teamsByGroup[1].name)
+        }
+        for (const letter of sideB){
+            const teamsByGroup = standings.filter(team => team.group === letter);
+            clasificatedTeamsSideB.push(teamsByGroup[0].name)
+            clasificatedTeamsSideA.push(teamsByGroup[1].name)
+        }
+        console.log(clasificatedTeamsSideA)
+        console.log(clasificatedTeamsSideB)
+    } 
     
+     
+        
+      
 
-
+}
     

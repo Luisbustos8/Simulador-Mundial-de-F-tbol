@@ -1,20 +1,25 @@
 import groupPhase from "./classes/groupPhase.js"
 import { worldCupTeams } from "./teams.js"
 
+
 const config = { rounds:1, pointsPerWin:3, pointsPerDraw:1, pointsPerLose:0 }
 const worldCup = new groupPhase("World Cup", worldCupTeams)
 const teamNames = worldCup.teams.map(team => team.name)
+
 console.log("=========================================")
 console.log("========= COMIENZA EL MUNDIAL ===========")
 console.log("=========================================")
 console.log("EQUIPOS PARTICIPANTES:")
+console.log("=========================================")
 console.log(worldCupTeams)
+console.log("=========================================")
 worldCup.lotteryGroups()
 console.log(worldCup.getGroups())
+console.log("=========================================")
 worldCup.generateFullSchedule()
-
-// Mostramos el calendario de cada grupo.
 console.log("CALENDARIO DEL MUNDIAL")
+console.log("=========================================")
+
 let i = 0
 const letterGroup = ["A", "B", "C", "D", "E", "F", "G", "H"]
     worldCup.fullSchedule.forEach(groups => {
@@ -50,10 +55,9 @@ const letterGroup2 = ["A", "B", "C", "D", "E", "F", "G", "H"]
         }) 
         z++  
     })
-
-// Comenzamos la fase de grupos.
-
- 
+console.log("=========================================")
+console.log("Comenzamos la fase de grupos")
+console.log("=========================================") 
 worldCup.start()
 const lettersForGroup = ["A", "B", "C", "D", "E", "F", "G", "H"]
     worldCup.summaries.forEach((summary,index)=> {
@@ -76,11 +80,10 @@ const lettersForGroup = ["A", "B", "C", "D", "E", "F", "G", "H"]
             GoalsDiff: team.goalsFor - team.goalsAgainst
 
         }
-    }))
-    
         
-   
-    
+    }))
+    console.log("=========================================")   
 })
+worldCup.startFinalPhase()
     
 
