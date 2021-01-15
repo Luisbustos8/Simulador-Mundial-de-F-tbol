@@ -85,5 +85,6 @@ const lettersForGroup = ["A", "B", "C", "D", "E", "F", "G", "H"]
     console.log("=========================================")   
 })
 worldCup.startFinalPhase()
-    
-
+worldCup.roundOf16()
+worldCup.roundOf8()
+worldCup.semifinalsRound()

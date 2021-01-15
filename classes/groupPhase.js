@@ -94,7 +94,65 @@ export default class groupPhase extends Tournament {
             }
         })
     }
+    playFinalPhase16A(matchesRoundOf16){
+        const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam: matchesRoundOf16[0],
+                homeGoals: homeGoals,
+                awayTeam: matchesRoundOf16[1],
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: matchesRoundOf16[0],
+            homeGoals: homeGoals,
+            awayTeam: matchesRoundOf16[1],
+            awayGoals: awayGoals
+        }
+    }
+    playFinalPhase8A(matchesOf8){
+        const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam:matchesOf8[0],
+                homeGoals: homeGoals,
+                awayTeam: matchesOf8[1],
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: matchesOf8[0],
+            homeGoals: homeGoals,
+            awayTeam: matchesOf8[1],
+            awayGoals: awayGoals
+        }
+    }
+    playSemifinal(semifinalistTeams){
+        const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam:semifinalistTeams[0],
+                homeGoals: homeGoals,
+                awayTeam: semifinalistTeams[1],
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: semifinalistTeams[0],
+            homeGoals: homeGoals,
+            awayTeam: semifinalistTeams[1],
+            awayGoals: awayGoals
+        }
+    }
 
 }
-
-
