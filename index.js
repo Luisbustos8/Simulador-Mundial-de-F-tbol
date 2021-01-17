@@ -81,10 +81,56 @@ const lettersForGroup = ["A", "B", "C", "D", "E", "F", "G", "H"]
 
         }
         
-    }))
-    console.log("=========================================")   
+    })) 
 })
-worldCup.startFinalPhase()
-worldCup.roundOf16()
-worldCup.roundOf8()
-worldCup.semifinalsRound()
+worldCup.finalWorldCup()
+console.log("=========================================") 
+console.log("========= EMPIEZA LA FASE FINAL =========") 
+console.log("=========================================") 
+console.log(`RESUMEN OCTVAVOS DE FINAL`)
+    worldCup.summariesOfRound16SideA.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+    worldCup.summariesOfRound16SideB.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+
+console.log("=========================================") 
+console.log(`RESUMEN CUARTOS DE FINAL`)
+    worldCup.summariesOfRound8SideA.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+    worldCup.summariesOfRound8SideB.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+console.log("=========================================") 
+console.log(`RESUMEN SEMIFINALES`)
+    worldCup.summariesOfSemifinalsSideA.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+    worldCup.summariesOfSemifinalsSideB.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+console.log("=========================================") 
+console.log(`RESUMEN FINAL`)
+    worldCup.summariesOfWorldCupfinal.forEach(side => {
+        side.results.forEach(match => {
+            console.log(`${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`)
+        }) 
+    })
+console.log("=========================================") 
+    worldCup.winnerWorldCup.forEach( winner =>{
+        console.log(`${winner}`, "CAMPEÓN DEL MUNDO!!!!")
+    })

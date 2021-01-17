@@ -26,7 +26,14 @@ export default class Tournament {
         this.setup(config)
         this.setupTeams(teams)
         this.summaries = []
- 
+        this.summariesOfRound16SideA = []
+        this.summariesOfRound16SideB = []
+        this.summariesOfRound8SideA = []
+        this.summariesOfRound8SideB = []
+        this.summariesOfSemifinalsSideA = []
+        this.summariesOfSemifinalsSideB = []
+        this.summariesOfWorldCupfinal = []
+        this.winnerWorldCup = []
     }
         
     setup(config){
@@ -203,30 +210,44 @@ export default class Tournament {
         throw new Error("play method not implemented")
     }
     
-    startFinalPhase(){
+    setTeamsForFinalPhase(){
         const sideA = ["A", "C", "E", "G"]
         const sideB = ["B", "D", "F", "H"]
         const groupA = []
-        const groupB = []
         const standings = this.summaries[7].standings
         for (const letter of sideA){
             const teamsByGroup = standings.filter(team => team.group === letter);
             groupA.push(teamsByGroup[0].name)
+        }
+        for (const letter of sideB){
+            const teamsByGroup = standings.filter(team => team.group === letter);
+            groupA.push(teamsByGroup[1].name)
+        
+        }
+        
+        return groupA
+    }
+    setTeamsForFinalPhaseB(){
+        const sideA = ["A", "C", "E", "G"]
+        const sideB = ["B", "D", "F", "H"]
+        const groupB = []
+        const standings = this.summaries[7].standings
+        for (const letter of sideA){
+            const teamsByGroup = standings.filter(team => team.group === letter);
             groupB.push(teamsByGroup[1].name)
         }
         for (const letter of sideB){
             const teamsByGroup = standings.filter(team => team.group === letter);
             groupB.push(teamsByGroup[0].name)
-            groupA.push(teamsByGroup[1].name)
         }
-        return groupA
-        return groupB
+        console.log("HOLAAA",groupB)
         
+        return groupB
     } 
     
      
-    roundOf16(groupA, groupB){
-        const roundOf16GroupA = this.startFinalPhase(groupA)
+    roundOf16(){
+        const roundOf16GroupA = this.setTeamsForFinalPhase()
         const matchesOf16GroupA = {
             results: []
         }
@@ -243,7 +264,8 @@ export default class Tournament {
             aux++
             matchesRoundOf16 = []  
         }
-      
+        this.summariesOfRound16SideA.push(matchesOf16GroupA)
+        
        
         
         const clasificatedForRound8 = []
@@ -254,14 +276,46 @@ export default class Tournament {
             clasificatedForRound8.push(matchesOf16GroupA.results[i].awayTeam)
         }
         }
-        console.log(clasificatedForRound8)
+        
         return clasificatedForRound8
     
         
         
     } 
-    roundOf8(clasificatedForRound8){
-        const roundOf8 = this.roundOf16(clasificatedForRound8)        
+    roundOf16B(){
+        const roundOf16GroupB = this.setTeamsForFinalPhaseB()
+        const matchesOf16GroupB = {
+            results: []
+        }
+        let aux = roundOf16GroupB.length / 2
+        let matchesRoundOf16B = []
+        for (let i= 0; i<roundOf16GroupB.length; i++){
+            if ( i === 4){
+                break
+            }
+            matchesRoundOf16B.push(roundOf16GroupB[i])
+            matchesRoundOf16B.push(roundOf16GroupB[aux])           
+            let result = this.playFinalPhase16B(matchesRoundOf16B)                
+            matchesOf16GroupB.results.push(result)           
+            aux++
+            matchesRoundOf16B = []  
+        }
+        this.summariesOfRound16SideB.push(matchesOf16GroupB)
+        const clasificatedForRound8B = []
+        for (let i=0; i < matchesOf16GroupB.results.length; i++){
+            if (matchesOf16GroupB.results[i].homeGoals > matchesOf16GroupB.results[i].awayGoals){
+            clasificatedForRound8B.push(matchesOf16GroupB.results[i].homeTeam)
+        } else {
+            clasificatedForRound8B.push(matchesOf16GroupB.results[i].awayTeam)
+        }
+        }
+        
+        return clasificatedForRound8B
+        
+    }
+     roundOf8(){
+        const roundOf8 = this.roundOf16() 
+             
         const resultOf8 = {
             results: []
         }
@@ -277,6 +331,7 @@ export default class Tournament {
             let result = this.playFinalPhase8A(matchesOf8)
             resultOf8.results.push(result)
         }
+        this.summariesOfRound8SideA.push(resultOf8)
         const clasificatedForSemifinalsA = []
         for (let i=0; i < resultOf8.results.length; i++){
             if (resultOf8.results[i].homeGoals > resultOf8.results[i].awayGoals){
@@ -287,14 +342,43 @@ export default class Tournament {
         }
         return clasificatedForSemifinalsA
     }
-    semifinalsRound(clasificatedForSemifinalsA){
-        const semifinalistTeams = this.roundOf8(clasificatedForSemifinalsA)
-        console.log("Avanzan a semifinales--->", semifinalistTeams)
+    roundOf8B(){
+        const roundOf8B = this.roundOf16()        
+        const resultOf8B = {
+            results: []
+        }
+        const matchesOf8B = []
+        matchesOf8B.push(roundOf8B[0])
+        matchesOf8B.push(roundOf8B[1])
+        let result = this.playFinalPhase8B(matchesOf8B)
+        resultOf8B.results.push(result)
+        if (matchesOf8B.length > 0){
+            let matchesOf8B = []
+            matchesOf8B.push(roundOf8B[2])
+            matchesOf8B.push(roundOf8B[3])
+            let result = this.playFinalPhase8B(matchesOf8B)
+            resultOf8B.results.push(result)
+        }
+        this.summariesOfRound8SideB.push(resultOf8B)
+        const clasificatedForSemifinalsB = []
+        for (let i=0; i < resultOf8B.results.length; i++){
+            if (resultOf8B.results[i].homeGoals > resultOf8B.results[i].awayGoals){
+            clasificatedForSemifinalsB.push(resultOf8B.results[i].homeTeam)
+        } else {
+            clasificatedForSemifinalsB.push(resultOf8B.results[i].awayTeam)
+        }
+        }
+        
+        return clasificatedForSemifinalsB
+    }
+    semifinalsRound(){
+        const semifinalistTeams = this.roundOf8()
         const semifinal = {
             results: []
         }
         let result = this.playSemifinal(semifinalistTeams)
         semifinal.results.push(result)
+        this.summariesOfSemifinalsSideA.push(semifinal)
         const firstFinalist = []
         for (let i=0; i < semifinal.results.length; i++){
             if (semifinal.results[i].homeGoals > semifinal.results[i].awayGoals){
@@ -303,21 +387,73 @@ export default class Tournament {
             firstFinalist.push(semifinal.results[i].awayTeam)
         }
         }
-        console.log("El Primer finalista del Mundial es",  firstFinalist)
         
+        return firstFinalist
     }
-
+    semifinalsRoundB(){
+        const semifinalistTeamsB = this.roundOf8B()
+       
+        const semifinalB = {
+            results: []
+        }
+        let result = this.playSemifinal(semifinalistTeamsB)
+        semifinalB.results.push(result)
+        this.summariesOfSemifinalsSideB.push(semifinalB)
+        const secondFinalist = []
+        for (let i=0; i < semifinalB.results.length; i++){
+            if (semifinalB.results[i].homeGoals > semifinalB.results[i].awayGoals){
+            secondFinalist.push(semifinalB.results[i].homeTeam)
+        } else {
+            secondFinalist.push(semifinalB.results[i].awayTeam)
+        }
+        }
+        
+        return secondFinalist   
+    }
+    finalWorldCup(){
+        const firstFinalist = this.semifinalsRound()
+        const secondFinalist = this.semifinalsRoundB()
+        const matchFinal =  {
+            results: []
+        }
+        let result = this.playFinalWorldCup(firstFinalist, secondFinalist)
+        matchFinal.results.push(result)
+        
+        this.summariesOfWorldCupfinal.push(matchFinal)
+        const winner = []
+        for (let i=0; i < matchFinal.results.length; i++){
+            if (matchFinal.results[i].homeGoals > matchFinal.results[i].awayGoals){
+            winner.push(matchFinal.results[i].homeTeam)
+        } else {
+            winner.push(matchFinal.results[i].awayTeam)
+        }
+        this.winnerWorldCup.push(winner)
+    }
+}
+    
     
     playFinalPhase16A(matchesRoundOf16){
+        throw new Error("play method not implemented")
+    }
+    playFinalPhase16B(matchesRoundOf16B){
         throw new Error("play method not implemented")
     }
     playFinalPhase8A(matchesOf8){
         throw new Error("play method not implemented")
     }
+    playFinalPhase8B(matchesOf8B){
+        throw new Error("play method not implemented")
+    }
     playSemifinal(semifinalistTeams){
         throw new Error("play method not implemented")
     }
+    playSemifinalB(semifinalistTeams){
+        throw new Error("play method not implemented")
+    }
     playFinalPhaseB(groupB){
+        throw new Error("play method not implemented")
+    }
+    playFinalWorldCup(firstFinalist, secondFinalist){
         throw new Error("play method not implemented")
     }
       

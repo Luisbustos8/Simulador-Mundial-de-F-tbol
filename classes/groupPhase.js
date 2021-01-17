@@ -114,6 +114,26 @@ export default class groupPhase extends Tournament {
             awayGoals: awayGoals
         }
     }
+        playFinalPhase16B(matchesRoundOf16B){
+        const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam: matchesRoundOf16B[0],
+                homeGoals: homeGoals,
+                awayTeam: matchesRoundOf16B[1],
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: matchesRoundOf16B[0],
+            homeGoals: homeGoals,
+            awayTeam: matchesRoundOf16B[1],
+            awayGoals: awayGoals
+        }
+    }
     playFinalPhase8A(matchesOf8){
         const homeGoals = this.generateGoals()
         const awayGoals = this.generateGoals()
@@ -131,6 +151,26 @@ export default class groupPhase extends Tournament {
             homeTeam: matchesOf8[0],
             homeGoals: homeGoals,
             awayTeam: matchesOf8[1],
+            awayGoals: awayGoals
+        }
+    }
+    playFinalPhase8B(matchesOf8B){
+        const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam:matchesOf8B[0],
+                homeGoals: homeGoals,
+                awayTeam: matchesOf8B[1],
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: matchesOf8B[0],
+            homeGoals: homeGoals,
+            awayTeam: matchesOf8B[1],
             awayGoals: awayGoals
         }
     }
@@ -154,5 +194,44 @@ export default class groupPhase extends Tournament {
             awayGoals: awayGoals
         }
     }
-
+    playSemifinalB(semifinalistTeamsB){
+        const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam:semifinalistTeamsB[0],
+                homeGoals: homeGoals,
+                awayTeam: semifinalistTeamsB[1],
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: semifinalistTeams[0],
+            homeGoals: homeGoals,
+            awayTeam: semifinalistTeams[1],
+            awayGoals: awayGoals
+        }
+    }
+    playFinalWorldCup(firstFinalist, secondFinalist){
+       const homeGoals = this.generateGoals()
+        const awayGoals = this.generateGoals()
+        while (homeGoals === awayGoals){
+            const homeGoals = this.generateGoals()
+            const awayGoals = this.generateGoals()
+            return {
+                homeTeam: firstFinalist,
+                homeGoals: homeGoals,
+                awayTeam: secondFinalist,
+                awayGoals: awayGoals 
+            }
+        }
+        return {
+            homeTeam: firstFinalist,
+            homeGoals: homeGoals,
+            awayTeam: secondFinalist,
+            awayGoals: awayGoals
+        } 
+    }
 }
