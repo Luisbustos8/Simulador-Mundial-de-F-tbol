@@ -240,7 +240,7 @@ export default class Tournament {
             const teamsByGroup = standings.filter(team => team.group === letter);
             groupB.push(teamsByGroup[0].name)
         }
-        console.log("HOLAAA",groupB)
+        
         
         return groupB
     } 
@@ -343,7 +343,7 @@ export default class Tournament {
         return clasificatedForSemifinalsA
     }
     roundOf8B(){
-        const roundOf8B = this.roundOf16()        
+        const roundOf8B = this.roundOf16B()        
         const resultOf8B = {
             results: []
         }
@@ -410,6 +410,7 @@ export default class Tournament {
         
         return secondFinalist   
     }
+    
     finalWorldCup(){
         const firstFinalist = this.semifinalsRound()
         const secondFinalist = this.semifinalsRoundB()
